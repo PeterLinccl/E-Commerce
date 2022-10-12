@@ -27,6 +27,18 @@ export class ProductService {
     return this.getProducts(searchUrl);
   }
 
+  //map the json data from Spring data rest to product array, to dispay each products 
+  getProductListPagination(thePage: number,
+                           thePageSize: number,
+                           theCategoryId : number): Observable<GetResponseProducts> {
+    
+    //@todo: need to build url based on category id ,Spring data rest supports pagination out of the box. Just send the parameters of the page and size
+    const searchUrl = `${this.baseUrl}/search/findByCategoryId?id=${theCategoryId}`+ `&page=${thePage}&size=${thePageSize}`;
+
+    return this.httpClient.get<GetResponseProducts>(searchUrl);
+  }
+
+
 //map the json data from Spring data rest to productCategoy array, to display each category on the side bar
   getProductCatories(): Observable<ProductCategory[]>{
     //call rest api
@@ -65,6 +77,12 @@ export class ProductService {
 interface GetResponseProducts {
   _embedded: {
     products: Product[];
+  },
+  page:{//pagination
+    size: number;
+    totalElements: number;
+    totalPages: number;
+    number : number;
   }
 }
 

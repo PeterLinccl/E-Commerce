@@ -324,6 +324,31 @@ input.au-input.au-input-xl{
     transform:translate(-50%,-50%)
 }
 
+/*
+pagination 
+*/
+ngb-pagination .page-item.active .page-link {
+    box-shadow: none !important;
+    border-color: transparent !important;
+    color: rgb(14, 29, 125) !important;
+    background-color: lightgray;
+    border: none;
+  }
+ngb-pagination .page-item:not(.active) .page-link {
+    color: black !important;
+    border-color: transparent !important;
+    background-color: white;
+    border: none;
+  }
+
+
+.pagenation{
+    color: #000;
+    box-shadow: none;
+    border-color: transparent !important;
+    background-color: lightgrey;
+}
+
 /* 
  * ----------------------------
  * Left Menu Bar
@@ -999,10 +1024,13 @@ footer ul li{
         margin-left:15px
     }
     .footer-pagination{
-        text-align:center
+        
+        text-align:center;
     }
+
+ 
     .product-box{
-        text-align:centerg
+        text-align:center
     }
     .page-container{
         position:relative;
