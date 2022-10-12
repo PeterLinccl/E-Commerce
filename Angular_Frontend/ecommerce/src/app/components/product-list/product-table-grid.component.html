@@ -6,11 +6,25 @@
                 <div *ngFor="let tempProduct of products" class="col-md-3">
                     <div class="product-box">
                         <!--class product box build css reapeatly for each product-->
-                        <img src="{{tempProduct.imageUrl}}" alt="img-responsive">
-                        <h1>{{tempProduct.name}}</h1>
+
+                        <a routerLink ="/products/{{tempProduct.id}}">
+                            <img src="{{tempProduct.imageUrl}}" alt="img-responsive">
+                        </a>
+                        <h1>
+                            <a routerLink ="/products/{{tempProduct.id}}">
+                                {{tempProduct.name}}
+                            </a>
+                        </h1>
+                        
+
                         <div class="price">{{tempProduct.unitPrice | currency: 'USD'}}</div>
                         <a href="#" class="primary-btn">Add to cart</a>
                     </div>
+                    
+                </div>
+                <!--if the product not found-->
+                <div *ngIf="products?.length == 0" class="alert alert-warning col-md-12" role="alert">
+                    404 Product Not Found!
                 </div>
             </div>
         </div>

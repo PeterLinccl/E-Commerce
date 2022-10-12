@@ -86,19 +86,32 @@ h6{
 }
 
 a{
-    display:inline-block
+    text-decoration: none;
+    display:inline-block;
+    outline:0
+
+}
+a:link { 
+    text-decoration: none;
+    outline:0;
+    color:#000
+
 }
 
-a:active,a:focus,a:hover{
+a:active,a:focus,a:visited,a:hover{
     text-decoration:none;
-    outline:0
+    outline:0;
+    color:#000
+
 }
 
 a,a:hover{
+    text-decoration: none;
     -webkit-transition:all .3s ease;
     -o-transition:all .3s ease;
     -moz-transition:all .3s ease;
-    transition:all .3s ease
+    transition:all .3s ease;
+    outline:0
 }
 
 /*Layout Css*/
@@ -382,7 +395,7 @@ input.au-input.au-input-xl{
 }
 
 .navbar-sidebar .navbar-list li a:hover{
-    color:#0da8e4
+    color:#020a5e
 }
 
 /* 
@@ -724,8 +737,18 @@ table.table.table-bordered th{
     color:#060e11
 }
 .detail-section{
+   
     margin-top:60px
 }
+.detail-display{
+ text-align: center;
+}
+.detail-img{
+    margin: auto;
+    display: block;
+    width: 30%;
+}
+
 /**/
 
 /* 
@@ -756,6 +779,7 @@ a.primary-btn:hover{
 
 .active-link {
   font-weight: bold;
+  
 }
 
 /* 

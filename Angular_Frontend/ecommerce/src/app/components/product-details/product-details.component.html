@@ -1,0 +1,21 @@
+<div class="detail-section">
+    
+    <div class="container-fluid">
+        <div class="left-back">
+            <a href="javascript:void(0);" (click)="goToPreviousPage()" class="mt-5 primary-btn">Back</a> 
+        </div>
+        <div class="detail-display">
+            <img src="{{product.imageUrl}}" class="detail-img">
+            <h3>{{product.name}}</h3>
+            <div class="price">{{product.unitPrice | currency: 'USD'}}</div>
+            <a href="#" class="primary-btn"> Add to cart</a>
+        </div>
+        
+
+        <hr>
+        <h4>Description: </h4>
+        <p>{{product.description}}</p>
+
+        
+    </div>
+</div>
