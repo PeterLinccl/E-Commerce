@@ -39,6 +39,7 @@
                             <div class="pagination justify-content-end">
                             <ngb-pagination  [(page)] = "thePageNumber"
                                              [pageSize]="thePageSize"
+                                             [maxSize]="5"
                                              [collectionSize]="theTotalElements"
                                              (pageChange)="listProducts()" 
                                              ><!--event binding page change call from product list component (pageChange)="listProducts()" 
@@ -46,6 +47,18 @@
 
                             </ngb-pagination>
                             </div>
+
+                            <!-- size for pagination <div class="col-md-3 mt-2" style="text-align: right;">
+                                <span class="mr-2"> Page Size</span>
+                                <select #myPageSelect (change)="updatePageSize(myPageSelect.value)" name="" id="">
+                                    <option value="true">5</option>
+                                    <option value="true">10</option>
+                                    <option value="true">15</option>
+                                    <option value="true">20</option>
+
+                                </select>
+                            </div> -->
+
                         </div>
                     </div>
 

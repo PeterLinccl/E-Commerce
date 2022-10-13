@@ -21,6 +21,7 @@ export class ProductListComponent implements OnInit {
   thePageSize : number = 12;
   theTotalElements: number = 0;
 
+  previousKeyWord: string = "";
 
   constructor(private productService:ProductService,
               private route : ActivatedRoute) { }
@@ -46,11 +47,25 @@ export class ProductListComponent implements OnInit {
   handleSearchProducts() {
     const theKeyword:string = this.route.snapshot.paramMap.get('keyword')!;
 
-    this.productService.searchProducts(theKeyword).subscribe(
-      data => {
-        this.products = data;
-      })
+    //if we have different key word than previous then set thePageNumber to 1
+
+    if(this.previousKeyWord != theKeyword){
+      this.thePageNumber = 1;
+
+    }
+
+    this.previousKeyWord = theKeyword;
+
+    console.log(`keyword=${theKeyword} , thePageNumber=${this.thePageNumber}`);
+    
+
+
+    this.productService.getProductPagination(this.thePageNumber - 1,
+                                              this.thePageSize,
+                                              theKeyword).subscribe(this.processResult());
+      
   }
+
   handleListProducts(){
     //invoked once subscribe, fetch data from product component
       // check if id parameter is available, using active route ,state of route at this given time and map of all routes parameter
@@ -81,21 +96,20 @@ export class ProductListComponent implements OnInit {
         
 
 
-      //now get the products for the given category id
+      //now get the products list  pagiantion
       this.productService.getProductListPagination(this.thePageNumber -1 , // typescript pagenumber is 1 base but database is 0 base
                                                    this.thePageSize,
                                                     this.currentCategoryId).subscribe(
-        data =>{
-          //assign data
-          this.products = data._embedded.products;
-
-          //properties that define in json
-          this.thePageNumber = data.page.number + 1;
-          this.thePageSize = data.page.size;
-          this.theTotalElements = data.page.totalElements;
-
-        }
-      )
+                                                      this.processResult());
   }
-
+  //updatePageSize(pageSize: String){this.thePageSize = +pageSize; this.thePageNumber = 1;
+  //this.listProducts()} method for change page size
+  processResult() {
+    return (data: any) =>{
+      this.products = data._embedded.products;
+      this.thePageNumber = data.page.number + 1;
+      this.thePageSize = data.page.size;
+      this.theTotalElements = data.page.totalElements;
+    };
+  }
 }
