@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { CartItems } from 'src/app/common/cart-items';
 import { Product } from 'src/app/common/product';
+import { CartService } from 'src/app/services/cart.service';
 import { ProductService } from 'src/app/services/product.service';
 
 @Component({
@@ -12,8 +14,8 @@ import { ProductService } from 'src/app/services/product.service';
 export class ProductListComponent implements OnInit {
 
   products : Product[] = [];
-  currentCategoryId: number = 1;
-  previousCategoryId:number = 1;
+  currentCategoryId: number;
+  previousCategoryId:number;//remove number = 1, 404 not found pop out
   searchMode: boolean =false;
  
 
@@ -24,6 +26,7 @@ export class ProductListComponent implements OnInit {
   previousKeyWord: string = "";
 
   constructor(private productService:ProductService,
+              private cartService : CartService,
               private route : ActivatedRoute) { }
 
   ngOnInit(): void {
@@ -70,15 +73,21 @@ export class ProductListComponent implements OnInit {
     //invoked once subscribe, fetch data from product component
       // check if id parameter is available, using active route ,state of route at this given time and map of all routes parameter
       const hasCategoryId: boolean = this.route.snapshot.paramMap.has('id');
+      
 
-      if(hasCategoryId){
-        //read the id(parameter string) and convert using "+" to the number, ! IS non-null operator, tell compiler it's not null
-        this.currentCategoryId = +this.route.snapshot.paramMap.get('id')!;
-      }else{
-        // if none of category id is available... return default
-        this.currentCategoryId = 1  ;
-      }
-  
+     
+      if (hasCategoryId) {
+        // now get the products for the given category id
+      this.currentCategoryId = +this.route.snapshot.paramMap.get('id')!;
+
+      this.productService.getProductListPagination(this.thePageNumber - 1, // typescript pagenumber is 1 base but database is 0 base
+                                                  this.thePageSize,
+                                                  this.currentCategoryId).subscribe(
+                                                  this.processResult());
+    }else{
+      this.productService.getProductListPaginationNoCategory(this.thePageNumber - 1,
+                                                            this.thePageSize).subscribe(this.processResult());
+    }
       /*
         check if we have a different category than previous 
         Note: Angular will reuse a component if it  is currently being viewed
@@ -87,7 +96,6 @@ export class ProductListComponent implements OnInit {
       */
         if(this.previousCategoryId != this.currentCategoryId){
           this.thePageNumber = 1;
-
         }
 
         this.previousCategoryId = this.currentCategoryId;
@@ -97,10 +105,11 @@ export class ProductListComponent implements OnInit {
 
 
       //now get the products list  pagiantion
-      this.productService.getProductListPagination(this.thePageNumber -1 , // typescript pagenumber is 1 base but database is 0 base
-                                                   this.thePageSize,
-                                                    this.currentCategoryId).subscribe(
-                                                      this.processResult());
+  
+    // this.productService.getProductListPagination(this.thePageNumber - 1, // typescript pagenumber is 1 base but database is 0 base
+    //                                               this.thePageSize,
+    //                                               this.currentCategoryId).subscribe(
+    //                                               this.processResult());
   }
   //updatePageSize(pageSize: String){this.thePageSize = +pageSize; this.thePageNumber = 1;
   //this.listProducts()} method for change page size
@@ -112,4 +121,16 @@ export class ProductListComponent implements OnInit {
       this.theTotalElements = data.page.totalElements;
     };
   }
+
+  addToCart(theProduct : Product){
+    
+    console.log(`Adding to Cart: ${theProduct.name} , ${theProduct.unitPrice}`);
+
+    //call addtocart method
+    const theCartItem = new CartItems(theProduct);
+
+    this.cartService.addToCart(theCartItem);
+    
+  }
+
 }

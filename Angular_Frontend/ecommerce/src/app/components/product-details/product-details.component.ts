@@ -3,6 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { Product } from 'src/app/common/product';
 import { ProductService } from 'src/app/services/product.service';
 import { Location } from '@angular/common';
+import { CartService } from 'src/app/services/cart.service';
+import { CartItems } from 'src/app/common/cart-items';
 
 @Component({
   selector: 'app-product-details',
@@ -11,10 +13,12 @@ import { Location } from '@angular/common';
 })
 export class ProductDetailsComponent implements OnInit {
 
-  product! : Product;
+
+  product : Product = new Product();
 
   constructor(private productService: ProductService,
               private route: ActivatedRoute,
+              private cartService:CartService,
               private _location: Location) { }
 
   ngOnInit(): void {
@@ -36,5 +40,11 @@ export class ProductDetailsComponent implements OnInit {
       goToPreviousPage(): void{
         this._location.back();
       }
+      addToCart() {
+        console.log(`Adding to cart: ${this.product.name},${this.product.unitPrice}`);
 
+        const theCartItem = new CartItems(this.product);
+        this.cartService.addToCart(theCartItem);
+        
+      }
 }

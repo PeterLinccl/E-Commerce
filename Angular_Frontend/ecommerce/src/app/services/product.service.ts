@@ -25,6 +25,15 @@ export class ProductService {
     return this.getProducts(searchUrl);
   }
 
+  //home page 
+  getProductListPaginationNoCategory(thePage : number, thePageSize : number): Observable <GetResponseProducts>{
+
+    const allProductsUrl = `${this.baseUrl}` + `?page=${thePage}&size=${thePageSize}`;
+
+    return this.httpClient.get<GetResponseProducts>(allProductsUrl);
+  }
+
+
   //to dispay products in pages 
   getProductListPagination(thePage: number,
                            thePageSize: number,
