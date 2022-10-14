@@ -6,6 +6,7 @@ import { CartItems } from '../common/cart-items';
   providedIn: 'root'
 })
 export class CartService {
+ 
 
   cartItems: CartItems[]=[];
 
@@ -24,14 +25,9 @@ export class CartService {
     let alreadyExistsInCart:boolean = false;
     let existCartItem: CartItems = undefined;
 
-    //find the item base on id
     if(this.cartItems.length > 0){
-      for(let tempCartItems of this.cartItems){
-        if(tempCartItems.id === theCartItem.id){
-          existCartItem =tempCartItems;
-          break;
-        }
-      }
+    //find the item base on id
+      existCartItem = this.cartItems.find(tempCartItem => theCartItem.id  === tempCartItem.id);
 
           //check if we found it
           alreadyExistsInCart = (existCartItem != undefined);
@@ -78,6 +74,29 @@ export class CartService {
 
     console.log(`--`);
     
+
+  }
+
+  // -- for cart quantity
+  decrementQuantity(theCartItem: CartItems) {
+    theCartItem.quantity--;
+
+    if(theCartItem.quantity == 0){
+      this.remove(theCartItem);
+    }else{
+      this.computerCartTotals();
+    }
+  }
+
+  remove(theCartItem: CartItems) {
+
+    //get index of item in the array
+    const itemIndex = this.cartItems.findIndex( tempCartItem => tempCartItem.id === theCartItem.id);
+    //if found,remove the item from the array 
+    if(itemIndex > -1){
+      this.cartItems.splice(itemIndex,1);
+      this.computerCartTotals();
+    }
 
   }
 

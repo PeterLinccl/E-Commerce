@@ -779,17 +779,16 @@ select {
 }
 
 table.table.table-bordered {
-    border: 1px solid #ccc;
+    border: 2px solid rgb(232, 226, 226);
     background: #fff
 }
 
-.table-bordered td,
-.table-bordered th {
-    border: 1px solid #dee2e6
+table.table-bordered td,table.table-bordered th {
+    border: 1px solid #f3f5f7
 }
 
 table.table.table-bordered th {
-    BACKGROUND: #0da8e4;
+    BACKGROUND: #e59225;
     color: #fff;
     font-size: 14px;
     padding: 7px

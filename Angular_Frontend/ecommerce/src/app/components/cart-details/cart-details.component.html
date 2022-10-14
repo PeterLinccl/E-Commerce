@@ -1,1 +1,75 @@
-<p>cart-details works!</p>
+<div class="main-content">
+    
+    <div class="section-content section-contenct-p30">
+        <div class="container-fluid">
+
+            <div *ngIf="cartItems.length > 0">
+
+
+            <table class="table table-bordered">
+
+                <tr>
+                    <th width="20%">Product Image</th>
+                    <th width="50%">Product Detail</th>
+                    <th width="30%">Quantity</th>
+                </tr>
+
+                <tr *ngFor="let tempCartItem of cartItems">
+                    <td>
+                        <img src="{{tempCartItem.imageUrl}}" class="img-responsive" width="150px">
+                    </td>
+                    <td>
+                        <p style="text-align: center;">{{tempCartItem.name}}</p>
+                        <p style="text-align: center;">{{tempCartItem.unitPrice | currency: 'USD'}}</p>
+
+                    </td>
+                    <td>
+                        <div class="item " >
+                            
+                            <div class="row no-gutters" style="text-align: center;  margin-left: 20%; margin-right: 20%;">
+                                <div class="col">
+                                    <button (click)="incrementQuantity(tempCartItem)" class="btn btn-outline-dark btn-sm">
+                                        <i class="fas fa-plus"></i>
+                                    </button>
+                                </div>
+                                
+                                <div class="col ml-4 mr-2">
+                                    {{tempCartItem.quantity}}
+                                </div>
+                                <div class="col">
+                                    <button (click)="decrementQuantity(tempCartItem)" class="btn btn-outline-dark btn-sm">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+                                </div>
+                                <div class="col-8"></div>
+                            </div>
+                        </div>
+
+                        <div class="col"  style="text-align: center;  margin-left: 20%; margin-right: 20%;">
+                            <button (click)="remove(tempCartItem)" class="btn btn-outline-warning btn-sm mt-2">Remove this Item</button>
+                         </div>
+
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="2"></td>
+                    <td style="font-weight: bold">
+                        <p style="text-align: center;">Total Quantity: {{totalQuantity}}</p>
+                        <p style="text-align: center;">Shipping: FREE</p>
+                        <P style="text-align: center;">Total Price: {{totalPrice | currency : 'USD'}}</P>
+                    </td>
+                </tr>
+
+            </table>
+
+        </div>
+
+        <div *ngIf="cartItems.length == 0" class="alert alert-warning col-md-12" role="alert">
+           Shopping Cart is empty.
+        </div>
+
+        </div>
+    </div>
+
+</div>
