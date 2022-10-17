@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { CheckoutFormService } from 'src/app/services/checkout-form.service';
 
 @Component({
   selector: 'app-checkout',
@@ -10,7 +11,14 @@ export class CheckoutComponent implements OnInit {
 
   checkoutFormGroup: FormGroup;
 
-  constructor(private formBuilder:FormBuilder) { }
+  totalPrice: number = 0;
+  totalQuantity: number = 0;
+
+  creditCardMonth: number[] = [];
+  creditCardYear: number[] = [];
+
+  constructor(private formBuilder:FormBuilder,
+              private checkFormService: CheckoutFormService) { }
 
   ngOnInit(): void {
     this.checkoutFormGroup = this.formBuilder.group(
@@ -40,15 +48,82 @@ export class CheckoutComponent implements OnInit {
           cardNumber: [''],
           securityCode: [''],
           expirationMonth: [''],
-          expiratioinYear:['']
+          expirationYear:['']
         })
       }); 
+
+      //populate credit card months
+      const startMonth: number = new Date().getMonth() +1;
+      console.log("startMonth: " + startMonth);
+
+      this.checkFormService.getCreditCardMonths(startMonth).subscribe(
+        data => {
+          console.log("Retrieved credit card months: "+ JSON.stringify(data));
+          this.creditCardMonth = data;
+        }
+      );
+      
+
+      //populate credit card years
+        this.checkFormService.getCreditCardYears().subscribe(
+          data =>{
+            console.log("Retrived Credit card Years: " + JSON.stringify(data));
+            this.creditCardYear = data;
+            
+          }
+        );
+
+
+
+    }
+
+
+    copyShippingAddressToBillingAddress(event){
+        
+      if(event.target.checked){
+        //if checked, copy info from shipping to billing
+        this.checkoutFormGroup.controls.billingAddress
+              .setValue(this.checkoutFormGroup.controls.shippingAddress.value);
+      }else{//not checked then it's blank 
+        this.checkoutFormGroup.controls.billingAddress.reset();
+      }
+      
     }
 
       onSubmit(){
         console.log("Handling the submit button");
         console.log(this.checkoutFormGroup.get('customer').value);
-        
-        
+          
       }
+
+      
+      handleMonthsAndYears(){
+
+        const creditCardFormGroup = this.checkoutFormGroup.get('creditCard');
+
+        const currentYear: number = new Date().getFullYear();
+        const selectedYear: number = Number(creditCardFormGroup.value.expirationYear);
+
+
+        //if the current year equals the selected year, then start with the current month 
+
+        let startMonth: number;
+
+        if(currentYear == selectedYear){
+          startMonth = new Date().getMonth() + 1;
+
+        }else{
+          startMonth =1;
+        }
+
+        this.checkFormService.getCreditCardMonths(startMonth).subscribe(
+          data => {
+            console.log("Retrived credit card month: " + JSON.stringify(data));
+            this.creditCardMonth = data;
+          }
+        )
+
+      };
+
+
 }
