@@ -14,12 +14,12 @@ public class State {
     @Column(name = "id")
     private int id;
 
-    @Column(name = "code")
+    @Column(name = "name")
     private String name;
 
     @ManyToOne
     @JoinColumn(name = "country_id")
-    private String Country;
+    private Country country;
 
 
 }

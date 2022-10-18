@@ -1,10 +1,13 @@
 package com.eccommerce.springboot.config;
 
+import com.eccommerce.springboot.dao.CountryRepository;
+import com.eccommerce.springboot.dao.StateRepository;
 import com.eccommerce.springboot.entity.Product;
 import com.eccommerce.springboot.entity.ProductCategory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
+import org.springframework.data.rest.core.mapping.ExposureConfigurer;
 import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurer;
 import org.springframework.http.HttpMethod;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
@@ -32,18 +35,27 @@ public class DataRestConfig implements RepositoryRestConfigurer {
         HttpMethod[] theUnsupportedActions = {HttpMethod.POST, HttpMethod.PUT,HttpMethod.DELETE,HttpMethod.PATCH};
 
         //DISABLE POST PUT DELETE
-        config.getExposureConfiguration().forDomainType(Product.class)
-                .withItemExposure(((metdata, httpMethods) -> httpMethods.disable(theUnsupportedActions)))
-                .withCollectionExposure((metdata, httpMethods) -> httpMethods.disable(theUnsupportedActions));
+        diableHttpMethod(config.getExposureConfiguration().forDomainType(Product.class), theUnsupportedActions);
 
         //DISABLE POST PUT DELETE
-        config.getExposureConfiguration().forDomainType(ProductCategory.class)
-                .withItemExposure(((metdata, httpMethods) -> httpMethods.disable(theUnsupportedActions)))
-                .withCollectionExposure((metdata, httpMethods) -> httpMethods.disable(theUnsupportedActions));
+        diableHttpMethod(config.getExposureConfiguration().forDomainType(ProductCategory.class), theUnsupportedActions);
+
+        //diable post put delete country
+        diableHttpMethod(config.getExposureConfiguration().forDomainType(CountryRepository.class),theUnsupportedActions);
+
+        //diable post put delete state
+        diableHttpMethod(config.getExposureConfiguration().forDomainType(StateRepository.class),theUnsupportedActions);
 
         //call an internal helper method
         exposeIds(config);
     }
+
+    private static void diableHttpMethod(ExposureConfigurer config, HttpMethod[] theUnsupportedActions) {
+        config
+                .withItemExposure(((metdata, httpMethods) -> httpMethods.disable(theUnsupportedActions)))
+                .withCollectionExposure((metdata, httpMethods) -> httpMethods.disable(theUnsupportedActions));
+    }
+
     private void exposeIds(RepositoryRestConfiguration config){
         // expose entity id, to get list of product categories by id
         //  and master/detail view... get a product by id...
