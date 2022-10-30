@@ -8,8 +8,9 @@ import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
+
 @Entity
-@Table（name="customer"）
+@Table(name = "customer")
 @Getter
 @Setter
 public class Customer {

@@ -37,9 +37,10 @@ public class CheckoutServiceImpl implements CheckoutService{
 
         //populate order with orderItems
         Set<OrderItem> orderItems = purchase.getOrderItem();
-        for (OrderItem item: orderItems) {
-            order.add(item);
-        }
+        orderItems.forEach( item -> order.add(item));
+//        for (OrderItem item: orderItems) {
+//            order.add(item);
+//        }
         //populate order with billingAddress and shippingAddress
         order.setBillingAddress(purchase.getBillingAddress());
         order.setShippingAddress(purchase.getShippingAddress());
