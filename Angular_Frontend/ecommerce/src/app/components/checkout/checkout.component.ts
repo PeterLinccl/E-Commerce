@@ -1,9 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Country } from 'src/app/common/country';
+import { Order } from 'src/app/common/order';
+import { OrderItem } from 'src/app/common/order-item';
+import { Purchase } from 'src/app/common/purchase';
 import { State } from 'src/app/common/state';
 import { CartService } from 'src/app/services/cart.service';
 import { CheckoutFormService } from 'src/app/services/checkout-form.service';
+import { CheckoutService } from 'src/app/services/checkout.service';
 import { CheckoutFormValidators } from 'src/app/validators/checkout-form-validators';
 
 @Component({
@@ -28,7 +33,9 @@ export class CheckoutComponent implements OnInit {
 
   constructor(private formBuilder:FormBuilder,
               private checkFormService: CheckoutFormService,
-              private cartService: CartService) { }
+              private cartService: CartService,
+              private checkoutService: CheckoutService,
+              private router : Router) { }
 
   ngOnInit(): void {
 
@@ -209,14 +216,48 @@ get creditCardSecurityCard(){
 
         if(this.checkoutFormGroup.invalid){
           this.checkoutFormGroup.markAllAsTouched();
+          return;
         }
 
+        //set up order
+        let order = new Order();
+
+        order.totalPrice = this.totalPrice;
+        order.totalQuantity =this.totalQuantity;
+
+        //get orderitems from cartitems
+        const cartitems = this.cartService.cartItems;
+        /*
+        let orderitems : OrderItem[] = [];
+        for(int i =  0 ; i < orderitems.length ; i++){
+            orderitems[i] = new OrderItem(cartiems[i]);
+        }
+        */
+        let orderItems: OrderItem[] = cartitems.map(tempCartitem => new OrderItem(tempCartitem));
+
+         //set up purchase
+         let purchase = new Purchase();
+
+        //populate purchase: customer
+        
+
+        //populate purchase: shipping address
+
+
+        //populate purchase: billing address
+
+
+
+        //pupulate purchase: order and orderitems
+
+
+        //call REST API via the checkoutService
+
+        //for debug
         console.log(this.checkoutFormGroup.get('customer').value);
         console.log("The email address is " + this.checkoutFormGroup.get('customer').value.email);
         console.log("The shipping address country is " + this.checkoutFormGroup.get('shippingAddress').value.country.name);
         console.log("The shipping address country is " + this.checkoutFormGroup.get('shippingAddress').value.country.name);
-        
-        
         
       }
 
