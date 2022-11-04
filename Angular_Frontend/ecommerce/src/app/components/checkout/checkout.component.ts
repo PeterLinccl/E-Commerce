@@ -265,7 +265,7 @@ get creditCardSecurityCard(){
         //call REST API via the checkoutService
         this.checkoutService.placeOrder(purchase).subscribe({
           next: response => {
-            alert(`Your order has been received. \n Order tracking number:  ${response.orderTrackingNumber} `);
+            alert(`Your order has been received. \nOrder tracking number:  ${response.orderTrackingNumber} `);
             
             //reset cart
             this.resetCart();

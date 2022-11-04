@@ -20,7 +20,7 @@ export class CheckoutFormService {
   getCountries(): Observable<Country[]>{
     return this.httpClient.get<GetResponseCountries>(this.countriesUrl).pipe(
       map(response => response._embedded.countries)
-    )
+    );
   }
 
   getStates(theCountryCode:number): Observable<State[]>{
