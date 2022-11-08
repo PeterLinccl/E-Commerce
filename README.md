@@ -15,6 +15,9 @@
 ### Search for Item
 ![image](https://user-images.githubusercontent.com/47198276/200452114-04c50022-4354-40e3-9e64-16c1c8bc8204.png)
 
+### Product detail
+![image](https://user-images.githubusercontent.com/47198276/200454282-7d8210be-d1d8-44a9-91ec-1752070bece3.png)
+
 ### Shopping Cart
 ![image](https://user-images.githubusercontent.com/47198276/200452535-a17bd40e-212c-4e03-b67a-a586063482c8.png)
 
