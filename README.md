@@ -5,9 +5,11 @@
 - Search for products by keyword.
 - Contains many categories regarding items.
 - Product detail view.
-- Checkout page with address, email , name and credit card format validation.
+- Checkout page with address, email and name format validation.
+- Process credit card payments with Stripe.
 - Add and remove products to/from their cart while also specifying the quantity of each item. 
 - Login/Logout feature using Okta.
+- List of order history.
 
 ### Home Page
 ![image](https://user-images.githubusercontent.com/47198276/200452024-c7a7efd1-f3f2-41ac-988d-ab07c22fa630.png)
