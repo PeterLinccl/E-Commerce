@@ -21,9 +21,6 @@
 ### Shopping Cart
 ![image](https://user-images.githubusercontent.com/47198276/200452535-a17bd40e-212c-4e03-b67a-a586063482c8.png)
 
-### Login Page
-![image](https://user-images.githubusercontent.com/47198276/200452688-99fc583a-7ee2-4ab3-91ed-617d81f39a51.png)
-
 ### User Login  
 ![image](https://user-images.githubusercontent.com/47198276/211359146-b2f0bcfb-344a-49f9-ad08-8c06e5b4635e.png)
 
