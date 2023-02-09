@@ -1,5 +1,6 @@
 # E-Commerce Web Application
-- Fully functional E-commerce website built by Angular and Spring Boot.
+- E-commerce website built by Angular, Spring Boot and MySQL.
+
 
 ## Features
 - Search for products by keyword.
