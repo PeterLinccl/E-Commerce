@@ -1,5 +1,5 @@
 # E-Commerce Web Application
-- E-commerce website built by Angular, Spring Boot and MySQL.
+- E-commerce website built by Angular, Spring Boot, Typescript and MySQL.
 
 
 ## Features
